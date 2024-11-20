@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: {{ primary_color }};
+            --primary-color-rgb: {{ primary_color_rgb }};
+        }
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            padding: 0;
+            background: #111;
+            color: white;
+            overflow-x: hidden;
+        }
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 2rem;
+        }
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: radial-gradient(circle at center, 
+                rgba(var(--primary-color-rgb), 0.2) 0%,
+                rgba(0, 0, 0, 0) 70%);
+            z-index: 1;
+        }
+        .content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+        }
+        h1 {
+            font-size: 5rem;
+            font-weight: 800;
+            margin: 0;
+            line-height: 1.1;
+            background: linear-gradient(135deg, #fff 0%, var(--primary-color) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            animation: titleAnimation 2s ease-out forwards;
+        }
+        h2 {
+            font-size: 1.5rem;
+            font-weight: 300;
+            margin-top: 1.5rem;
+            opacity: 0;
+            animation: subtitleAnimation 1s ease-out 0.5s forwards;
+        }
+        .creative-shape {
+            position: absolute;
+            border-radius: 50%;
+            background: var(--primary-color);
+            filter: blur(80px);
+            z-index: 0;
+            opacity: 0.5;
+        }
+        .shape1 {
+            width: 300px;
+            height: 300px;
+            top: -150px;
+            left: -150px;
+        }
+        .shape2 {
+            width: 200px;
+            height: 200px;
+            bottom: -100px;
+            right: -100px;
+            background: white;
+        }
+        @keyframes titleAnimation {
+            0% {
+                transform: translateY(50px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+        @keyframes subtitleAnimation {
+            0% {
+                transform: translateY(20px);
+                opacity: 0;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 0.8;
+            }
+        }
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            opacity: 0;
+            animation: fadeIn 1s ease-out 1.5s forwards;
+        }
+        .scroll-indicator::before {
+            content: '↓';
+            font-size: 2rem;
+            color: white;
+        }
+        @keyframes fadeIn {
+            to {
+                opacity: 0.5;
+            }
+        }
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 3rem;
+            }
+            h2 {
+                font-size: 1.25rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hero">
+        <div class="creative-shape shape1"></div>
+        <div class="creative-shape shape2"></div>
+        <div class="content">
+            <h1>{{ title }}</h1>
+            <h2>{{ subtitle }}</h2>
+        </div>
+        <div class="scroll-indicator"></div>
+    </div>
+    <script>
+        // Convertir el color primario hex a RGB para los efectos
+        const hexToRgb = (hex) => {
+            const result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+            return result ? 
+                `${parseInt(result[1], 16)}, ${parseInt(result[2], 16)}, ${parseInt(result[3], 16)}` : 
+                '0, 0, 0';
+        };
+        document.documentElement.style.setProperty('--primary-color-rgb', hexToRgb('{{ primary_color }}'));
+    </script>
+</body>
+</html>
