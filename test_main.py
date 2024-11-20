@@ -125,5 +125,59 @@ def test_template_rendering():
     assert "<html" in data["html"]
     assert "</html>" in data["html"]
 
+def test_generate_preview():
+    """Test de generación de URL de vista previa"""
+    test_request = {
+        "template": "minimal",
+        "title": "Test Title",
+        "subtitle": "Test Subtitle",
+        "primaryColor": "#000000"
+    }
+    response = client.post("/generate-preview", json=test_request)
+    assert response.status_code == 200
+    assert "preview_url" in response.json()
+    assert response.json()["preview_url"].startswith("/preview/")
+
+def test_preview_access():
+    """Test de acceso a la vista previa"""
+    # Generar una vista previa
+    test_request = {
+        "template": "minimal",
+        "title": "Test Title",
+        "subtitle": "Test Subtitle",
+        "primaryColor": "#000000"
+    }
+    preview_response = client.post("/generate-preview", json=test_request)
+    preview_url = preview_response.json()["preview_url"]
+    
+    # Acceder a la vista previa
+    response = client.get(preview_url)
+    assert response.status_code == 200
+    assert "Test Title" in response.text
+    assert "Test Subtitle" in response.text
+
+def test_invalid_preview_token():
+    """Test de token inválido de vista previa"""
+    response = client.get("/preview/invalid_token")
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Preview not found"
+
+def test_preview_expiration():
+    """Test de expiración de vista previa"""
+    from main import preview_storage, PreviewData
+    from datetime import datetime, timedelta
+    
+    # Crear una vista previa expirada manualmente
+    test_token = "test_expired_token"
+    preview_data = PreviewData(html="<p>Test</p>", css="body {}")
+    preview_data.created_at = datetime.now() - timedelta(hours=25)  # 25 horas atrás
+    preview_data.expires_at = preview_data.created_at + timedelta(hours=24)
+    preview_storage[test_token] = preview_data
+    
+    # Intentar acceder a la vista previa expirada
+    response = client.get(f"/preview/{test_token}")
+    assert response.status_code == 404
+    assert response.json()["detail"] == "Preview has expired"
+
 if __name__ == "__main__":
     pytest.main(["-v", __file__])
