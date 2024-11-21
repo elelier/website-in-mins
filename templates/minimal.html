@@ -3,16 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
-    <style id="dynamic-styles"></style>
+    <title>{{title}}</title>
+    <link rel="stylesheet" href="minimal.css">
 </head>
 <body>
     <div class="container">
-        <h1>{{ title }}</h1>
-        <h2>{{ subtitle }}</h2>
+        <h1>{{title}}</h1>
+        <h2>{{subtitle}}</h2>
     </div>
-    <script>
-        document.getElementById('dynamic-styles').textContent = `{{ css | safe }}`;
-    </script>
 </body>
 </html>

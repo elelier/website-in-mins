@@ -1,0 +1,38 @@
+:root {
+    --primary-color: {{ primaryColor }};
+    --secondary-color: {{ secondaryColor | default('#ffffff') }};
+    --font-family: {{ fontFamily | default('Roboto, sans-serif') }};
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: var(--font-family);
+    line-height: 1.6;
+    color: #333;
+}
+
+header {
+    background-color: var(--primary-color);
+    color: var(--secondary-color);
+    padding: 4rem 2rem;
+    text-align: center;
+}
+
+h1 {
+    margin: 0;
+    font-size: 3rem;
+    font-weight: 700;
+}
+
+.subtitle {
+    font-size: 1.5rem;
+    opacity: 0.9;
+    margin-top: 1rem;
+}
+
+.content {
+    max-width: 800px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}

@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    {% if meta_description %}
+    <meta name="description" content="{{ meta_description }}">
+    {% endif %}
+    <title>{{ title }}</title>
+    <link href="https://fonts.googleapis.com/css2?family={{ font_family.split(',')[0] }}&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary-color: {{ primary_color }};
+            --secondary-color: {{ secondary_color }};
+            --font-family: {{ font_family }};
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: var(--font-family);
+            line-height: 1.6;
+            color: #333;
+        }
+        
+        .hero {
+            background-color: var(--primary-color);
+            color: var(--secondary-color);
+            padding: 100px 20px;
+            text-align: center;
+            position: relative;
+            {% if hero_image and image_position == 'background' %}
+            background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('{{ hero_image }}');
+            background-size: cover;
+            background-position: center;
+            {% endif %}
+        }
+        
+        .hero h1 {
+            font-size: 3em;
+            margin-bottom: 20px;
+            animation: fadeInUp 1s ease-out;
+        }
+        
+        .hero p {
+            font-size: 1.5em;
+            max-width: 800px;
+            margin: 0 auto;
+            animation: fadeInUp 1s ease-out 0.2s;
+        }
+        
+        .portfolio {
+            max-width: 1200px;
+            margin: 50px auto;
+            padding: 0 20px;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+        
+        .portfolio-item {
+            background: #fff;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+        
+        .portfolio-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .portfolio-item img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+        }
+        
+        .portfolio-item-content {
+            padding: 20px;
+        }
+        
+        .portfolio-item h3 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+        }
+        
+        .contact {
+            background-color: var(--secondary-color);
+            padding: 50px 20px;
+            text-align: center;
+        }
+        
+        .contact h2 {
+            color: var(--primary-color);
+            margin-bottom: 30px;
+        }
+        
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+        
+        .social-links a {
+            color: var(--primary-color);
+            font-size: 24px;
+            transition: color 0.3s ease;
+        }
+        
+        .social-links a:hover {
+            color: var(--secondary-color);
+        }
+        
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        {% if custom_css %}
+        {{ custom_css }}
+        {% endif %}
+    </style>
+</head>
+<body>
+    <section class="hero">
+        <h1>{{ title }}</h1>
+        <p>{{ subtitle }}</p>
+        {% if hero_image and image_position != 'background' %}
+        <img src="{{ hero_image }}" alt="Hero image" class="hero-image hero-image-{{ image_position }}">
+        {% endif %}
+    </section>
+    
+    <section class="portfolio">
+        <div class="portfolio-item">
+            <img src="https://via.placeholder.com/400x300" alt="Project 1">
+            <div class="portfolio-item-content">
+                <h3>Proyecto 1</h3>
+                <p>Descripción del proyecto 1. Aquí puedes detallar las tecnologías utilizadas y los resultados obtenidos.</p>
+            </div>
+        </div>
+        <div class="portfolio-item">
+            <img src="https://via.placeholder.com/400x300" alt="Project 2">
+            <div class="portfolio-item-content">
+                <h3>Proyecto 2</h3>
+                <p>Descripción del proyecto 2. Destaca los aspectos más importantes y los desafíos superados.</p>
+            </div>
+        </div>
+        <div class="portfolio-item">
+            <img src="https://via.placeholder.com/400x300" alt="Project 3">
+            <div class="portfolio-item-content">
+                <h3>Proyecto 3</h3>
+                <p>Descripción del proyecto 3. Muestra el impacto y los resultados alcanzados.</p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="contact">
+        <h2>Contacto</h2>
+        <div class="social-links">
+            <a href="#" title="LinkedIn"><i class="fab fa-linkedin"></i></a>
+            <a href="#" title="GitHub"><i class="fab fa-github"></i></a>
+            <a href="#" title="Twitter"><i class="fab fa-twitter"></i></a>
+        </div>
+    </section>
+    
+    <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+</body>
+</html>
